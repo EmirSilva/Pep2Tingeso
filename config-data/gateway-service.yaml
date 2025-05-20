@@ -1,6 +1,6 @@
 server:
   port: 8080
-  
+
 eureka:
   client:
     fetch-registry: true
@@ -17,15 +17,31 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: student-service
-          uri: lb://student-service
+        - id: m1-price-service
+          uri: lb://m1-price-service
           predicates:
-            - Path=/student/**
-        - id: book-service
-          uri: lb://book-service
+            - Path=/prices/**
+        - id: m2-group-discount-service
+          uri: lb://m2-group-discount-service
           predicates:
-            - Path=/book/**
-        - id: pet-service
-          uri: lb://pet-service
+            - Path=/group-discount/**
+        - id: m3-cliente-frecuente-service
+          uri: lb://m3-cliente-frecuente-service
           predicates:
-            - Path=/pet/**
+            - Path=/visit-discount/**
+        - id: m4-holiday-discount-service
+          uri: lb://m4-holiday-discount-service
+          predicates:
+            - Path=/holiday-discount/**
+        - id: m5-reservation-service
+          uri: lb://m5-reservation-service
+          predicates:
+            - Path=/reservations/**
+        - id: m6-rack-service
+          uri: lb://m6-rack-service
+          predicates:
+            - Path=/rack/**
+        - id: m7-report-service
+          uri: lb://m7-report-service
+          predicates:
+            - Path=/reports/**

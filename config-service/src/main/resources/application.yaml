@@ -5,8 +5,8 @@ spring:
     config:
       server:
         git:
+          uri: https://github.com/EmirSilva/Pep2Tingeso.git
           default-label: main
-          uri: https://github.com/amigo1975/microsevices-data-project
           search-paths: config-data
   application:
     name: config-service

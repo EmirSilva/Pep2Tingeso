@@ -21,7 +21,7 @@ public class ReportService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String reservationServiceUrl = "http://localhost:8094/reservations/";
+    private final String reservationServiceUrl = "http://reservation-service/reservations/";
 
     private List<ReservationEntity> getAllReservations() {
         ResponseEntity<List<ReservationEntity>> response = restTemplate.exchange(

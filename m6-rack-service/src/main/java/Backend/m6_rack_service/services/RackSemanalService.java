@@ -26,7 +26,7 @@ public class RackSemanalService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String reservationServiceUrl = "http://localhost:8094/reservations/";
+    private final String reservationServiceUrl = "http://reservation-service/reservations/";
 
     public List<RackSemanalEntity> getAllRacks() {
         return rackRepository.findAll();
