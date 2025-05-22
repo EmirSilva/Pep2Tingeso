@@ -33,6 +33,8 @@ public class ReportService {
         return response.getBody();
     }
 
+    //metodo que genera un reporte de los ingresos por mes y tipo de tarifa dentro de un rango de año y mes
+    //se genera una lista de mapas donde cada mapa representa un mes y su respectivo ingreso
     public List<Map<String, Object>> generarReporteIngresosPorMesTipoTarifa(int yearInicio, int monthInicio, int yearFin, int monthFin) {
         List<ReservationEntity> allReservations = getAllReservations();
         if (allReservations == null) {
@@ -84,6 +86,8 @@ public class ReportService {
         }).collect(Collectors.toList());
     }
 
+    //metodo que genera un reporte de los ingresos por mes y rango de numero de personas en la reserva dentro de un rango de año y mes
+    //se genera una lista de mapas donde cada mapa representa un mes y su respectivo ingreso
     public List<Map<String, Object>> generarReporteIngresosPorMesNumeroPersonas(int yearInicio, int monthInicio, int yearFin, int monthFin) {
         List<ReservationEntity> allReservations = getAllReservations();
         if (allReservations == null) {

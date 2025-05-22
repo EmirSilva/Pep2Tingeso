@@ -18,7 +18,7 @@ public class UserEntity {
     private String email;
     private String name;
     private LocalDate dateOfBirth;
-    private int monthlyVisits; // Esta información podría estar en otro microservicio de usuarios
+    private int monthlyVisits;
 }
 
 

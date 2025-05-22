@@ -33,21 +33,22 @@ public class ReservationService {
     private UserKartAssignmentRepository userKartAssignmentRepository;
 
     @Autowired
-    private RestTemplate restTemplate; // Para comunicarse con otros microservicios
+    //para comunicarse con otros microservicios
+    private RestTemplate restTemplate;
 
-    // URL de los otros microservicios (deberían configurarse)
+    //url de los otros microservicios
     private final String priceServiceUrl = "http://price-service/prices";
     private final String groupDiscountServiceUrl = "http://group-discount-service/group-discount";
     private final String frequentCustomerDiscountServiceUrl = "http://visit-discount-service/visit-discount";
     private final String holidayDiscountServiceUrl = "http://holiday-discount-service/holiday-discount";
 
 
-    // Método para obtener la lista de asignaciones de usuario-kart para una reserva específica
+    //metodo para obtener la lista de asignaciones de usuario-kart para una reserva especifica
     public List<UserKartAssignmentEntity> getUserKartAssignmentsByReservationId(Long reservationId) {
         return userKartAssignmentRepository.findByReservationId(reservationId);
     }
 
-    // Método que crea una nueva reserva, gestionando usuarios, asignando karts y calculando el precio total
+    //metodo que crea una nueva reserva, gestionando usuarios, asignando karts y calculando el precio total
     @Transactional
     public ReservationEntity createReservation(ReservationEntity reservation) {
         // Lógica para crear/encontrar usuarios
@@ -61,7 +62,6 @@ public class ReservationService {
             }
             if (i == 0) {
                 reservingUser = user;
-                // La lógica de monthlyVisits podría estar en un servicio de usuarios
                 user.setMonthlyVisits(user.getMonthlyVisits() + 1);
                 userRepository.save(user);
             }
@@ -70,10 +70,10 @@ public class ReservationService {
         reservation.setUsuarios(usuarios);
         reservation.setGroupSize(usuarios.size());
 
-        // Guardar la reserva para obtener un ID
+        //guardar la reserva para obtener un ID
         ReservationEntity savedReservation = reservationRepository.save(reservation);
 
-        // Asignar karts
+        //asignar karts
         List<KartEntity> availableKarts = kartRepository.findByIsAvailableTrue();
         List<UserKartAssignmentEntity> userKartAssignments = new ArrayList<>();
         if (availableKarts.size() < usuarios.size()) {
@@ -93,30 +93,30 @@ public class ReservationService {
         }
         savedReservation.setUserKartAssignments(userKartAssignments);
 
-        // Calcular el precio total llamando a los otros microservicios
+        //calcular el precio total llamando a los otros microservicios
         double totalPrice = calculateBestTotalPrice(savedReservation, reservingUser != null ? reservingUser.getMonthlyVisits() : 0);
         savedReservation.setTotalPrice(totalPrice);
 
-        // Guardar la reserva con el precio total
+        //guardar la reserva con el precio total
         return reservationRepository.save(savedReservation);
     }
 
-    // Método para obtener todas las reservas
+    //metodo para obtener todas las reservas
     public List<ReservationEntity> getReservations() {
         return reservationRepository.findAll();
     }
 
-    // Método para obtener una reserva por ID
+    //metodo para obtener una reserva por ID
     public Optional<ReservationEntity> getReservationById(Long id) {
         return reservationRepository.findById(id);
     }
 
-    // Método para guardar o actualizar una reserva
+    //metodo para guardar o actualizar una reserva
     public ReservationEntity saveReservation(ReservationEntity reservation) {
         return reservationRepository.save(reservation);
     }
 
-    // Método para eliminar una reserva
+    //metodo para eliminar una reserva
     @Transactional
     public boolean deleteReservation(Long id) {
         Optional<ReservationEntity> reservationOptional = reservationRepository.findById(id);
@@ -136,9 +136,9 @@ public class ReservationService {
         return false;
     }
 
-    // Método para calcular el precio total llamando a los otros microservicios
+    //metodo para calcular el precio total llamando a los otros microservicios
     public double calculateBestTotalPrice(ReservationEntity reservation, int monthlyVisits) {
-        // 1. Obtener el precio base del microservicio M1
+        //microservicio 1
         Double basePrice = restTemplate.getForObject(
                 priceServiceUrl + "/basePrice?numLaps={numLaps}&duration={duration}",
                 Double.class,
@@ -148,7 +148,7 @@ public class ReservationService {
         if (basePrice == null) basePrice = 0.0;
         double currentPrice = basePrice * reservation.getGroupSize();
 
-        // 2. Aplicar descuento por grupo del microservicio M2
+        //microservicio 2
         if (reservation.getGroupSize() >= 3) {
             Double discountedPrice = restTemplate.getForObject(
                     groupDiscountServiceUrl + "/apply?basePrice={basePrice}&groupSize={groupSize}",
@@ -159,7 +159,7 @@ public class ReservationService {
             if (discountedPrice != null) currentPrice = discountedPrice;
         }
 
-        // 3. Aplicar descuento por cliente frecuente del microservicio M3
+        //microservicio 3
         if (monthlyVisits >= 2) {
             Double discountedPrice = restTemplate.getForObject(
                     frequentCustomerDiscountServiceUrl + "/apply?price={price}&monthlyVisits={monthlyVisits}",
@@ -170,7 +170,7 @@ public class ReservationService {
             if (discountedPrice != null) currentPrice = discountedPrice;
         }
 
-        // 4. Aplicar descuento por día festivo del microservicio M4
+        //microservicio 4
         LocalDate reservationDate = reservation.getReservationDate();
         Boolean isHoliday = restTemplate.getForObject(
                 holidayDiscountServiceUrl + "/is-holiday?date={date}",
@@ -186,9 +186,6 @@ public class ReservationService {
             );
             if (discountedPrice != null) currentPrice = discountedPrice;
         }
-
-        // Aquí faltaría la lógica para el descuento de cumpleaños (RF3), que necesitaría información de los usuarios.
-
         return currentPrice;
     }
 }

@@ -39,7 +39,7 @@ public class ReservationEntity {
     private int numLaps;
     private int duration;
     private int groupSize;
-    private boolean isBirthday; // Esto podría venir del servicio de usuarios
+    private boolean isBirthday;
     private double totalPrice;
 
     public void setIsBirthday(boolean isBirthday) {

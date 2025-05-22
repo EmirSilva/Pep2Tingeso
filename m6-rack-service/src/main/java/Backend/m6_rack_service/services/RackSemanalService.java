@@ -28,14 +28,18 @@ public class RackSemanalService {
 
     private final String reservationServiceUrl = "http://reservation-service/reservations/";
 
+    //metodo para obtener una lista de todos los registros del rack semanal
     public List<RackSemanalEntity> getAllRacks() {
         return rackRepository.findAll();
     }
 
+    //metodo para guardar un nuevo registro en el rack semanal
     public RackSemanalEntity saveRack(RackSemanalEntity rack) {
         return rackRepository.save(rack);
     }
 
+    //metodo para marcar un espacio en el rack semanal como ocupado segun la reserva
+    //se registra con el nombre del usuario que hizo la reserva
     public void marcarComoOcupado(Long reservationId) {
         try {
             ResponseEntity<ReservationEntity> response = restTemplate.getForEntity(
@@ -69,6 +73,8 @@ public class RackSemanalService {
         }
     }
 
+    //metodo para marcar un espacio en el rack semanal como libre segun la reserva
+    //se libera el espacio y se elimina el nombre del usuario que hizo la reserva
     public void marcarComoLibre(Long reservationId) {
         try {
             ResponseEntity<ReservationEntity> response = restTemplate.getForEntity(
@@ -102,6 +108,8 @@ public class RackSemanalService {
             LocalTime.of(22, 0)
     );
 
+    //metodo para obtener un mapa de disponibilidad del rack dentro de un rango de fechas especificado
+    //se devuelve un mapa con la fecha como clave y otro mapa con la hora como clave
     public Map<LocalDate, Map<LocalTime, Object>> getAvailabilityByDateRange(LocalDate startDate, LocalDate endDate) {
         Map<LocalDate, Map<LocalTime, Object>> availabilityMap = new HashMap<>();
         LocalDate currentDate = startDate;
