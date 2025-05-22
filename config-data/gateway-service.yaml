@@ -2,13 +2,13 @@ server:
   port: 8080
 
 eureka:
+  instance:
+    hostname: localhost
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      default-zone: http://localhost:8761/eureka
-  instance:
-    hostname: localhost
+      defaultZone: http://eureka-server-service:8761/eureka/
 
 spring:
   cloud:
@@ -16,6 +16,19 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        cors-configurations:
+          '[/**]': # Patrón de ruta global
+            allowedOrigins:
+              - http://localhost:5173
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
       routes:
         - id: m1-price-service
           uri: lb://m1-price-service
