@@ -1,20 +1,28 @@
 package Backend.m1_price_service.services;
 
+import Backend.m1_price_service.entities.PriceEntity;
+import Backend.m1_price_service.repositories.PriceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PriceService {
+
+    @Autowired
+    private PriceRepository priceRepository;
+
     //metodo que calcula el precio base de una reserva basado en el numero de vueltas y la duracion
     //si los valores se pasan los rangos definidos, retorna el precio maximo por defecto
     public double calculateBasePrice(int numLaps, int duration) {
-        if (numLaps <= 10 && duration <= 30) return 15000;
-        if (numLaps <= 15 && duration <= 35) return 20000;
-        if (numLaps <= 20 && duration <= 40)
-            return 25000;
+        Optional<PriceEntity> rule = priceRepository.findFirstByMaxLapsGreaterThanEqualAndMaxDurationGreaterThanEqualOrderByMaxLapsAscMaxDurationAsc(numLaps, duration);
+        if (rule.isPresent()) {
+            return rule.get().getBasePrice();
+        }
         return 25000;
     }
 
@@ -45,4 +53,3 @@ public class PriceService {
         return day == DayOfWeek.SATURDAY || day == DayOfWeek.SUNDAY;
     }
 }
-

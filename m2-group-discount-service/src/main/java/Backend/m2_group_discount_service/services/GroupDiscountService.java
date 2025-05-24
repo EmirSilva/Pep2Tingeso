@@ -1,19 +1,25 @@
 package Backend.m2_group_discount_service.services;
 
+import Backend.m2_group_discount_service.entities.GroupDiscountEntity;
+import Backend.m2_group_discount_service.repositories.GroupDiscountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GroupDiscountService {
-    public double applyGroupDiscount(double basePrice, int groupSize) {
-        int discountPercentage = 0;
 
-        if (groupSize >= 11) {
-            discountPercentage = 30;  //30% de descuento para grupos de 11-15 personas
-        } else if (groupSize >= 6) {
-            discountPercentage = 20;  //20% de descuento para grupos de 6-10 personas
-        } else if (groupSize >= 3) {
-            discountPercentage = 10;  //10% de descuento para grupos de 3-5 personas
-        } //si es 1-2 personas no hay descuento
+    @Autowired
+    private GroupDiscountRepository groupDiscountRepository;
+
+    public double applyGroupDiscount(double basePrice, int groupSize) {
+        List<GroupDiscountEntity> rules = groupDiscountRepository.findApplicableDiscountRules(groupSize);
+
+        int discountPercentage = 0;
+        if (!rules.isEmpty()) {
+            discountPercentage = rules.get(0).getDiscountPercentage();
+        }
 
         //calcular el precio con descuento
         double finalPrice = basePrice * (1 - discountPercentage / 100.0);

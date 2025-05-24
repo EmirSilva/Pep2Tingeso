@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: m3-cliente-frecuente-service-deployment
+  labels:
+    app: m3-cliente-frecuente-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: m3-cliente-frecuente-service
+  template:
+    metadata:
+      labels:
+        app: m3-cliente-frecuente-service
+    spec:
+      containers:
+        - name: m3-cliente-frecuente
+          image: emirjr/m3-image
+          ports:
+            - containerPort: 8090
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_M3
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_M3
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_M3
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: m6-rack-service-deployment
+  labels:
+    app: m6-rack-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: m6-rack-service
+  template:
+    metadata:
+      labels:
+        app: m6-rack-service
+    spec:
+      containers:
+        - name: m6-rack
+          image: emirjr/m6-image
+          ports:
+            - containerPort: 8090
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_HOST_M6
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_PORT_M6
+            - name: DB_DBNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config-map
+                  key: DB_NAME_M6
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: DB_PASSWORD

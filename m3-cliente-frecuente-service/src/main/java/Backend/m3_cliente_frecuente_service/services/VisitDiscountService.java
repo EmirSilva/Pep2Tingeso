@@ -1,13 +1,25 @@
 package Backend.m3_cliente_frecuente_service.services;
+
+import Backend.m3_cliente_frecuente_service.entities.VisitDiscountEntity;
+import Backend.m3_cliente_frecuente_service.repositories.VisitDiscountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VisitDiscountService {
-    //metodo que aplica un descuento al precio basado en la frecuencia de visitas mensuales de un cliente
+
+    @Autowired
+    private VisitDiscountRepository visitDiscountRepository;
+
     public double applyVisitDiscount(double price, int monthlyVisits) {
-        if (monthlyVisits >= 7) return price * 0.7;
-        if (monthlyVisits >= 5) return price * 0.8;
-        if (monthlyVisits >= 2) return price * 0.9;
+        List<VisitDiscountEntity> rules = visitDiscountRepository.findApplicableDiscountRules(monthlyVisits);
+
+        if (!rules.isEmpty()) {
+            return price * rules.get(0).getDiscountMultiplier();
+        }
         return price;
     }
 }
