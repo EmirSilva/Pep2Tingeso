@@ -5,9 +5,9 @@ metadata:
   labels:
     app: postgres-config-map
 data:
-  DB_HOST_M1: "m1-price-db-service"
+  DB_HOST_M1: "m1-price-service-db-service"
   DB_PORT_M1: "5432"
-  DB_NAME_M1: "m1-price-db"
+  DB_NAME_M1: "m1_price_service_db"
   DB_HOST_M2: "m2-group-discount-db-service"
   DB_PORT_M2: "5432"
   DB_NAME_M2: "m2-group-discount-db"
