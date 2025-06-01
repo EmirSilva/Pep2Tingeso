@@ -65,7 +65,7 @@ spec:
                   name: postgres-credentials
                   key: DB_PASSWORD
             - name: POSTGRES_DB
-              value: m1_price_service_db
+              value: m1-price-service-db
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: m1-price-service-db-data

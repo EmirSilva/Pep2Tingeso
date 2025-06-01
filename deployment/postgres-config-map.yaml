@@ -7,11 +7,11 @@ metadata:
 data:
   DB_HOST_M1: "m1-price-service-db-service"
   DB_PORT_M1: "5432"
-  DB_NAME_M1: "m1_price_service_db"
+  DB_NAME_M1: "m1-price-service-db"
   DB_HOST_M2: "m2-group-discount-db-service"
   DB_PORT_M2: "5432"
   DB_NAME_M2: "m2-group-discount-db"
-  DB_NAME_M3: "m3_cliente_frecuente_db"
+  DB_NAME_M3: "m3-cliente-frecuente-db"
   DB_PORT_M3: "5432"
   DB_NAME_M3: "m3-cliente-frecuente-db"
   DB_HOST_M4: "m4-holiday-discount-db-service"
