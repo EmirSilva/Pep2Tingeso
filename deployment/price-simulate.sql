@@ -1,9 +1,3 @@
-CREATE DATABASE pricedb;
-
-GRANT ALL PRIVILEGES ON DATABASE pricedb TO postgres;
-
-\c pricedb; -- Conectarse a la base de datos pricedb
-
 CREATE TABLE IF NOT EXISTS price (
     id SERIAL PRIMARY KEY,
     base_price DOUBLE PRECISION NOT NULL,
