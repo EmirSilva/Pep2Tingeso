@@ -30,7 +30,7 @@ spec:
                 configMapKeyRef:
                   name: postgres-config-map
                   key: DB_PORT_M1
-            - name: DB_DBNAME
+            - name: DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: postgres-config-map
