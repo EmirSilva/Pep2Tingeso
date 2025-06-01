@@ -31,6 +31,6 @@ spec:
     app: frontend-server-deployment
   ports:
     - protocol: TCP
-      port: 3000       # Puerto en el que el servicio escuchará
-      targetPort: 3000 # Puerto del contenedor al que se redirigirá el tráfico
+      port: 80       # Puerto en el que el servicio escuchará
+      targetPort: 80 # Puerto del contenedor al que se redirigirá el tráfico
   type: LoadBalancer # Expone el servicio externamente (útil para frontends)
