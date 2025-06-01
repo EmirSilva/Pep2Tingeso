@@ -16,6 +16,21 @@ spec:
     spec:
       containers:
         - name: m7-report
-          image: emirjr/m7-image
+          image: emirjr/m7-image # Asegúrate de que esta imagen esté disponible en tu registro
           ports:
-            - containerPort: 8090
+            - containerPort: 8090 # El puerto en el que escucha tu aplicación Spring Boot
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: m7-report-service # Nombre del servicio para que otros microservicios lo encuentren
+  labels:
+    app: m7-report-service
+spec:
+  ports:
+    - port: 8090       # Puerto en el que el servicio escuchará
+      targetPort: 8090 # Puerto del contenedor al que se redirigirá el tráfico
+      protocol: TCP
+  selector:
+    app: m7-report-service # Selecciona los pods con esta etiqueta
+  type: LoadBalancer # Puedes cambiar a ClusterIP si solo necesitas acceso interno dentro del cluster
