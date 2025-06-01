@@ -65,7 +65,7 @@ spec:
                   name: postgres-credentials
                   key: DB_PASSWORD
             - name: POSTGRES_DB
-              value: m5_reservation_db
+              value: m5-reservation-db
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: m5-reservation-db-data
