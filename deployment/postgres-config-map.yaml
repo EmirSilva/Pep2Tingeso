@@ -11,7 +11,7 @@ data:
   DB_HOST_M2: "m2-group-discount-db-service"
   DB_PORT_M2: "5432"
   DB_NAME_M2: "m2-group-discount-db"
-  DB_HOST_M3: "m3-cliente-frecuente-db-service"
+  DB_NAME_M3: "m3_cliente_frecuente_db"
   DB_PORT_M3: "5432"
   DB_NAME_M3: "m3-cliente-frecuente-db"
   DB_HOST_M4: "m4-holiday-discount-db-service"
