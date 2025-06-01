@@ -48,7 +48,7 @@ spec:
         tier: database
     spec:
       containers:
-        - name: postgres
+        - name: holiday-db
           image: postgres
           imagePullPolicy: "IfNotPresent"
           ports:
@@ -65,7 +65,7 @@ spec:
                   name: postgres-credentials
                   key: DB_PASSWORD
             - name: POSTGRES_DB
-              value: m4_holiday_discount_db
+              value: m4-holiday-discount-db
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: m4-holiday-discount-db-data
