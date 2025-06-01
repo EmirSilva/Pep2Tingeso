@@ -18,7 +18,7 @@ spec:
       - name: frontend-server-container
         image: emirjr/frontend-image # Tu imagen de frontend
         ports:
-        - containerPort: 3000 # El puerto en el que escucha tu aplicación frontend
+        - containerPort: 80 # El puerto en el que escucha tu aplicación frontend
 ---
 apiVersion: v1
 kind: Service
