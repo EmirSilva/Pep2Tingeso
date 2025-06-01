@@ -1,0 +1,195 @@
+.rack-semanal-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .rack-semanal-table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-top: 20px;
+  }
+  
+  .rack-semanal-table th, .rack-semanal-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .rack-semanal-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .day-slot.reserved {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .day-slot.available {
+    background-color: #d4edda;
+    color: #155724;
+  }
+  
+  .weekly-calendar-container {
+    font-family: sans-serif;
+    padding: 20px;
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .calendar-header {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .calendar-header button {
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr); 
+    border: 1px solid #ccc;
+  }
+  
+  .day-column {
+    border-left: 1px solid #eee;
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; 
+  }
+  
+  .day-header {
+    padding: 5px 10px; 
+    background-color: #f2f2f2;
+    text-align: center;
+    font-weight: bold;
+    line-height: 1.5; 
+  }
+  
+  .time-slot,
+  .hour-slot {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    height: 30px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9em;
+    color: #555;
+    white-space: nowrap;
+  }
+  
+  .hour-slot {
+    cursor: pointer;
+  }
+  
+  .hour-slot.available {
+    background-color: #e6ffe6; /* Verde claro para disponible */
+    color: #333;
+  }
+  
+  .hour-slot.available:hover {
+    background-color: #ccffcc;
+  }
+  
+  .hour-slot.reserved {
+    background-color: #ffe6e6; /* Rojo claro para reservado */
+    color: #333;
+  }
+  
+  .available-label {
+    color: #777;
+  }
+  
+  .reserved-label {
+    color: #721c24;
+  }
+  
+  .reservation-block {
+    background-color: #007bff;
+    color: white;
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .calendar-container {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 10;
+  }
+  
+  .calendar-container .calendar-header {
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .calendar-container .calendar-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    margin-bottom: 5px;
+    text-align: center;
+    font-size: 0.8em;
+    color: #555;
+  }
+  
+  .calendar-container .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    border: none;
+  }
+  
+  .calendar-container .calendar-day {
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    border: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+  }
+  
+  .calendar-container .calendar-day:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .calendar-container .calendar-day.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .calendar-container .calendar-day.empty {
+    cursor: default;
+    background: none;
+    border: none;
+  }

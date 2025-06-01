@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+    tools{
+        nodejs 'nodejs'
+    }
+    stages{
+        stage('Clone repository'){
+            steps{
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/EmirSilva/Pep1Tingeso']])
+                dir('tingeso-frontend') {
+                    bat 'npm install'
+                    bat 'npm run build'
+                }
+            }
+        }
+
+        stage('Build docker image'){
+            steps{
+                dir('tingeso-frontend') { 
+                    script{
+                        bat 'docker build -t emirjr/frontend-image:latest .'
+                    }
+                }
+            }
+        }
+
+        stage('Push image to Docker Hub'){
+            steps{
+                dir('tingeso-frontend') { 
+                    script{
+                        withDockerRegistry(credentialsId: 'docker-credentials') {
+                            bat 'docker push emirjr/frontend-image:latest'
+                        }
+                    }
+                } 
+            }
+        }
+    }
+}
