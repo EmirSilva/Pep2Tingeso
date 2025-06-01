@@ -48,7 +48,7 @@ spec:
         tier: database
     spec:
       containers:
-        - name: postgres
+        - name: cliente-db
           image: postgres
           imagePullPolicy: "IfNotPresent"
           ports:
