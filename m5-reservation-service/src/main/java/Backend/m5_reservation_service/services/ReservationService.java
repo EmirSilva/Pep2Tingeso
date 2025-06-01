@@ -188,4 +188,9 @@ public class ReservationService {
         }
         return currentPrice;
     }
+
+    //metodo para buscar un usuario por su correo
+    public UserEntity findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

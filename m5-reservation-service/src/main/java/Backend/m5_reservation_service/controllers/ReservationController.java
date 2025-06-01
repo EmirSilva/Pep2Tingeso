@@ -2,6 +2,8 @@ package Backend.m5_reservation_service.controllers;
 
 import Backend.m5_reservation_service.entities.ReservationEntity;
 import Backend.m5_reservation_service.services.ReservationService;
+import Backend.m5_reservation_service.entities.UserKartAssignmentEntity;
+import Backend.m5_reservation_service.entities.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -98,7 +100,7 @@ public class ReservationController {
             if (!usuariosPayload.isEmpty()) {
                 String firstUserEmail = usuariosPayload.get(0).get("email");
                 //usar el userservice para obtener las visitas mensuales
-                UserEntity firstUser = userService.findByEmail(firstUserEmail);
+                UserEntity firstUser = reservationService.findByEmail(firstUserEmail);
                 if (firstUser != null) {
                     monthlyVisits = firstUser.getMonthlyVisits();
                 }
