@@ -65,7 +65,7 @@ spec:
                   name: postgres-credentials
                   key: DB_PASSWORD
             - name: POSTGRES_DB
-              value: m3_cliente_frecuente_db
+              value: m3-cliente-frecuente-db
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: m3-cliente-frecuente-db-data
