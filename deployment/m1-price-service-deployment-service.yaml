@@ -49,3 +49,18 @@ spec:
                 configMapKeyRef:
                   name: postgres-config-map
                   key: DB_NAME_M1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: m1-price-service-service # Nombre DNS para acceder a este servicio
+  labels:
+    app: m1-price-service-service
+spec:
+  selector:
+    app: m1-price-service # Debe coincidir con el label 'app' de tu Deployment
+  ports:
+    - protocol: TCP
+      port: 8090        # El puerto al que otros servicios acceden
+      targetPort: 8090    # El puerto del contenedor
+  type: ClusterIP      # O LoadBalancer si quieres acceso externo
