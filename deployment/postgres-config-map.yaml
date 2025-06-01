@@ -20,3 +20,6 @@ data:
   DB_HOST_M5: "m5-reservation-db-service"
   DB_PORT_M5: "5432"
   DB_NAME_M5: "m5-reservation-db"
+  DB_HOST_M6: "m6-rack-service-db-service" # Nombre del Service de la DB
+  DB_PORT_M6: "5432"
+  DB_NAME_M6: "m6-rack-service-db"       # Nombre de la DB
