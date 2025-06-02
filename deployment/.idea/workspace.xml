@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config-server-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config-server-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eureka-server-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/eureka-server-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m1-price-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m1-price-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m2-group-discount-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m2-group-discount-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m3-cliente-frecuente-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m3-cliente-frecuente-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m4-holiday-discount-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m4-holiday-discount-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m5-reservation-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m5-reservation-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m6-rack-service-db-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m6-rack-service-db-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/m7-report-service-deployment-service.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/m7-report-service-deployment-service.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tingeso-frontend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/../tingeso-frontend/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/postgres-config-map-actual.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/postgres-config-map-actual.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,23 +28,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/emirs/OneDrive/Desktop/tingeso/Pep2Tingeso/deployment&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/emirs/OneDrive/Desktop/tingeso/Pep2Tingeso/eureka-server",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,7 +66,7 @@
       <workItem from="1748300915946" duration="537000" />
       <workItem from="1748547835354" duration="4338000" />
       <workItem from="1748733421754" duration="16008000" />
-      <workItem from="1748830057004" duration="674000" />
+      <workItem from="1748830057004" duration="1883000" />
     </task>
     <servers />
   </component>
