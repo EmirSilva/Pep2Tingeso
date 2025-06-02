@@ -89,4 +89,4 @@ spec:
   selector:
     app: m6-rack-service-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP

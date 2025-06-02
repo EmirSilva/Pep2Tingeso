@@ -89,4 +89,4 @@ spec:
   selector:
     app: m5-reservation-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP

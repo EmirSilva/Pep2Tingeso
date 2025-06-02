@@ -33,4 +33,4 @@ spec:
       protocol: TCP
   selector:
     app: m7-report-service # Selecciona los pods con esta etiqueta
-  type: LoadBalancer # Puedes cambiar a ClusterIP si solo necesitas acceso interno dentro del cluster
+  type: ClusterIP # Puedes cambiar a ClusterIP si solo necesitas acceso interno dentro del cluster

@@ -89,4 +89,4 @@ spec:
   selector:
     app: m2-group-discount-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP

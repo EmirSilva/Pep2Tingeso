@@ -89,4 +89,4 @@ spec:
   selector:
     app: m4-holiday-discount-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP

@@ -89,4 +89,4 @@ spec:
   selector:
     app: m1-price-service-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP

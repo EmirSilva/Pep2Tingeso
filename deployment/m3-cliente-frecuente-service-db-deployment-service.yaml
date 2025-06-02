@@ -89,4 +89,4 @@ spec:
   selector:
     app: m3-cliente-frecuente-db
     tier: database
-  type: LoadBalancer
+  type: ClusterIP
