@@ -4,4 +4,4 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://configservice.default.svc.cluster.local:8082
+      uri: http://config-server-service:8888
