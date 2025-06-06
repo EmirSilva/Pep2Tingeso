@@ -20,7 +20,7 @@ spring:
         cors-configurations:
           '[/**]': # Patrón de ruta global
             allowedOrigins:
-              - http://127.0.0.1:62390 # La URL de tu Frontend
+              - http://127.0.0.1:62734 # La URL de tu Frontend
               - http://192.168.49.2:31010 # La IP del nodo y el NodePort del Frontend (si lo vas a exponer así)
               - http://localhost:8080 # Si corres el frontend en localhost:8080 en dev
               - http://localhost:5173 # Si tu frontend Vite usa el puerto 5173 por defecto en dev
