@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../config-data/eureka-server.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/../config-data/eureka-server.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,7 +66,7 @@
       <workItem from="1748547835354" duration="4338000" />
       <workItem from="1748733421754" duration="16008000" />
       <workItem from="1748830057004" duration="1883000" />
-      <workItem from="1749184379752" duration="618000" />
+      <workItem from="1749184379752" duration="1624000" />
     </task>
     <servers />
   </component>
