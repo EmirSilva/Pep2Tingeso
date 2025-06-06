@@ -4,12 +4,4 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://config-server-service:8081 # Usar el nombre del servicio de Config Server
-  datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME} # Usar variables de entorno
-    username: ${DB_USER} # Usar variables de entorno
-    password: ${DB_PASSWORD} # Usar variables de entorno
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
+      uri: http://config-server-service:8888 # Usar el nombre del servicio de Config Server

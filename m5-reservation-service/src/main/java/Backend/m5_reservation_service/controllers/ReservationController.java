@@ -1,5 +1,6 @@
 package Backend.m5_reservation_service.controllers;
 
+import Backend.m5_reservation_service.entities.KartEntity;
 import Backend.m5_reservation_service.entities.ReservationEntity;
 import Backend.m5_reservation_service.services.ReservationService;
 import Backend.m5_reservation_service.entities.UserKartAssignmentEntity;
@@ -121,4 +122,14 @@ public class ReservationController {
         List<UserKartAssignmentEntity> assignments = reservationService.getUserKartAssignmentsByReservationId(id);
         return ResponseEntity.ok(assignments);
     }
+
+    //metodo get para listar todos los karts que estan actualmente disponibles
+    //retorna una lista de objetos KartEntity
+    @GetMapping("/available")
+    public ResponseEntity<List<KartEntity>> getAvailableKarts() {
+        List<KartEntity> availableKarts = reservationService.getAvailableKarts();
+        return new ResponseEntity<>(availableKarts, HttpStatus.OK);
+    }
+
+
 }

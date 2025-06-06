@@ -4,4 +4,4 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://config-server-service:8888
+      uri: http://config-server-service:8888 # Usar el nombre del servicio de Config Server

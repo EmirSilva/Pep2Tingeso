@@ -193,4 +193,10 @@ public class ReservationService {
     public UserEntity findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    //metodo para buscar todos los karts disponibles
+    public List<KartEntity> getAvailableKarts() {
+        return kartRepository.findByIsAvailableTrue();
+    }
+
 }
