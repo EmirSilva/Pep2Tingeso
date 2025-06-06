@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/postgres-config-map-actual.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/postgres-config-map-actual.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,7 +32,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/emirs/OneDrive/Desktop/tingeso/Pep2Tingeso/eureka-server",
+    "last_opened_file_path": "C:/Users/emirs/OneDrive/Desktop/tingeso/Pep2Tingeso/deployment",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -67,6 +64,7 @@
       <workItem from="1748547835354" duration="4338000" />
       <workItem from="1748733421754" duration="16008000" />
       <workItem from="1748830057004" duration="1883000" />
+      <workItem from="1749184379752" duration="277000" />
     </task>
     <servers />
   </component>
