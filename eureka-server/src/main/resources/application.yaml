@@ -1,10 +1,12 @@
 server:
-  port: 8761 # El puerto que quieres para Eureka Server
+  port: 8761
 
 eureka:
   instance:
+    hostname: eureka-server-service # Importante: Usa el nombre del servicio de Kubernetes
+    prefer-ip-address: false # Asegura que se use el hostname en lugar de la IP
   client:
-    fetch-registry: false # Un Eureka Server NO debe intentar buscar a otros en el registro
-    register-with-eureka: false # Un Eureka Server NO debe intentar registrarse a sí mismo
+    fetch-registry: false
+    register-with-eureka: false
     service-url:
-      default-zone: http://eureka-server-service:8761/eureka/ # La URL para la comunicación entre peers (o para sí mismo si es una sola instancia)
+      default-zone: http://eureka-server-service:8761/eureka/
