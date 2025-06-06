@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-server-deployment # Nombre del Deployment
+  name: frontend-server-deployment #nombre del Deployment
   labels:
     app: frontend-server-deployment
 spec:
@@ -16,14 +16,14 @@ spec:
     spec:
       containers:
       - name: frontend-server-container
-        image: emirjr/frontend-image # Tu imagen de frontend
+        image: emirjr/frontend-image # imagen docker
         ports:
-        - containerPort: 80 # El puerto en el que escucha tu aplicación frontend
+        - containerPort: 80 # puerto en el que escucha frontend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-server-service # Nombre del servicio para que otros microservicios (o el navegador) lo encuentren
+  name: frontend-server-service # nombre del servicio
   labels:
     app: frontend-server-deployment
 spec:
@@ -31,6 +31,6 @@ spec:
     app: frontend-server-deployment
   ports:
     - protocol: TCP
-      port: 80       # Puerto en el que el servicio escuchará
+      port: 80       # Puerto en el que el servicio escucha
       targetPort: 80 # Puerto del contenedor al que se redirigirá el tráfico
-  type: LoadBalancer # Expone el servicio externamente (útil para frontends)
+  type: LoadBalancer # Expone el servicio externamente

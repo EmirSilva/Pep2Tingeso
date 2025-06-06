@@ -3,8 +3,8 @@ server:
 
 eureka:
   instance:
-    hostname: eureka-server-service # Importante: Usa el nombre del servicio de Kubernetes
-    prefer-ip-address: false # Asegura que se use el hostname en lugar de la IP
+    hostname: eureka-server-service
+    prefer-ip-address: false
   client:
     fetch-registry: false
     register-with-eureka: false
