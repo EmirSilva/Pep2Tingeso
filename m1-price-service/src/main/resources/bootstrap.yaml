@@ -1,7 +1,6 @@
+# bootstrap.yaml (DESPUÉS)
 spring:
   application:
     name: m1-price-service
-  cloud:
-    config:
-      enabled: true
-      uri: http://config-server-service:8888 # Usar el nombre del servicio de Config Server
+  config: # <-- Nota el cambio: 'config' directamente bajo 'spring'
+    import: optional:configserver:http://config-server-service:8888 # <--- ¡NUEVO FORMATO!
