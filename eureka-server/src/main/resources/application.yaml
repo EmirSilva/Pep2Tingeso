@@ -1,0 +1,10 @@
+server:
+  port: 8761 # El puerto que quieres para Eureka Server
+
+eureka:
+  instance:
+  client:
+    fetch-registry: false # Un Eureka Server NO debe intentar buscar a otros en el registro
+    register-with-eureka: false # Un Eureka Server NO debe intentar registrarse a sí mismo
+    service-url:
+      default-zone: http://eureka-server-service:8761/eureka/ # La URL para la comunicación entre peers (o para sí mismo si es una sola instancia)
