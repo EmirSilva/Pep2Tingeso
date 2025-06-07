@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m7-report
-          image: emirjr/m7-image:v2 # Asegúrate de que esta imagen esté disponible en tu registro
+          image: emirjr/m7-image:v3 # Asegúrate de que esta imagen esté disponible en tu registro
           ports:
             - containerPort: 8090 # El puerto en el que escucha tu aplicación Spring Boot
 ---
