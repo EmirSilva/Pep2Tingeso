@@ -31,7 +31,7 @@ const remove = (id) => { // Usamos "remove" en lugar de "delete" para consistenc
 };
 
 const getAvailableKarts = () => {
-  return httpClient.get(`/karts/available`).then(response => {
+  return httpClient.get(`/reservations/available`).then(response => {
       return Array.isArray(response.data) ? response.data : [response.data];
   });
 };
