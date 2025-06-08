@@ -17,15 +17,17 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: '*'
+            # Cambia de allowedOrigins a allowedOriginPatterns
+            allowedOriginPatterns: "http://*" # <-- CAMBIA ESTO
             allowedMethods:
               - GET
               - POST
               - PUT
               - DELETE
-            allowedHeaders:
-              - "*"
+              - OPTIONS # <--- Asegúrate de que OPTIONS también esté aquí, es crucial para CORS
+            allowedHeaders: "*"
             allowCredentials: true
+            maxAge: 3600 # Puedes añadir esto para caché de pre-vuelo
       routes:
         - id: m1-price-service
           uri: lb://m1-price-service
