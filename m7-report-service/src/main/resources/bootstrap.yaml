@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: m7-report-service
+  config: # <-- Nota el cambio: 'config' directamente bajo 'spring'
+    import: optional:configserver:http://config-server-service:8888 # <--- ¡NUEVO FORMATO!

@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="" />
+    <list default="true" id="30d1c826-800c-4e69-9883-8c3fd8cfc794" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../m3-cliente-frecuente-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../m4-holiday-discount-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../m5-reservation-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../m6-rack-service/src/main/resources/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../m7-report-service/src/main/resources/bootstrap.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../m3-cliente-frecuente-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../m3-cliente-frecuente-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../m4-holiday-discount-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../m4-holiday-discount-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../m6-rack-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../m6-rack-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../m7-report-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../m7-report-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../m7-report-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../m7-report-service/src/main/resources/application.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,7 +43,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/emirs/OneDrive/Desktop/respaldo1/Pep2Tingeso/deployment",
+    "last_opened_file_path": "C:/Users/emirs/OneDrive/Desktop/Respaldo Tingeso/Pep2Tingeso/deployment",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -66,6 +77,7 @@
       <workItem from="1748830057004" duration="1883000" />
       <workItem from="1749184379752" duration="5790000" />
       <workItem from="1749221597375" duration="5044000" />
+      <workItem from="1749342181102" duration="5344000" />
     </task>
     <servers />
   </component>
