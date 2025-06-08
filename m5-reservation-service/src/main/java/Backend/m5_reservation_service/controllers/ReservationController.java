@@ -71,18 +71,28 @@ public class ReservationController {
             Integer duration = (Integer) payload.get("duration");
             String reservationDateStr = (String) payload.get("reservationDate");
             String reservationTimeStr = (String) payload.get("reservationTime");
+            // Nota: Es mejor usar Object en el segundo Map ya que los valores pueden ser de diferentes tipos, aunque aquí todos son Strings.
             List<Map<String, String>> usuariosPayload = (List<Map<String, String>>) payload.get("usuarios");
 
-            if (numLaps == null || duration == null || reservationDateStr == null || reservationTimeStr == null || usuariosPayload == null) {
+            if ((numLaps == null && duration == null) || reservationDateStr == null || reservationTimeStr == null || usuariosPayload == null) {
+                // Validación mejorada: al menos numLaps O duration deben tener un valor.
                 return ResponseEntity.badRequest().body(null);
             }
 
+            // Parsear la fecha y hora
             LocalDate reservationDate = LocalDate.parse(reservationDateStr);
-            LocalTime reservationTime = LocalTime.parse(reservationTimeStr.substring(0, 5)); // Eliminar los segundos
+            // Asegurarse de que el formato de tiempo es correcto antes de parsear
+            // Asumimos que frontend siempre envía HH:mm:ss, así que no es necesario substring
+            LocalTime reservationTime = LocalTime.parse(reservationTimeStr);
 
             ReservationEntity reservation = new ReservationEntity();
-            reservation.setNumLaps(numLaps);
-            reservation.setDuration(duration);
+            // Solo establecer si numLaps o duration son diferentes de null (y opcionalmente > 0)
+            if (numLaps != null) {
+                reservation.setNumLaps(numLaps);
+            }
+            if (duration != null) {
+                reservation.setDuration(duration);
+            }
             reservation.setReservationDate(reservationDate);
             reservation.setReservationTime(reservationTime);
             reservation.setGroupSize(usuariosPayload.size());
@@ -90,6 +100,7 @@ public class ReservationController {
             List<UserEntity> usuarios = usuariosPayload.stream()
                     .map(userMap -> {
                         UserEntity user = new UserEntity();
+                        user.setName(userMap.get("name")); // <--- ¡¡¡AÑADE ESTA LÍNEA!!!
                         user.setDateOfBirth(LocalDate.parse(userMap.get("dateOfBirth")));
                         user.setEmail(userMap.get("email"));
                         return user;
@@ -111,6 +122,8 @@ public class ReservationController {
             return ResponseEntity.ok(price);
 
         } catch (Exception e) {
+            // Logear la excepción completa para depuración
+            e.printStackTrace(); // <--- ¡Importante para depuración en Kubernetes!
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
@@ -130,6 +143,4 @@ public class ReservationController {
         List<KartEntity> availableKarts = reservationService.getAvailableKarts();
         return new ResponseEntity<>(availableKarts, HttpStatus.OK);
     }
-
-
 }
