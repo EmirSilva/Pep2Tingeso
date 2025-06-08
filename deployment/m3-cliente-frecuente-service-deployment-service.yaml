@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m3-cliente-frecuente
-          image: emirjr/m3-image:v5
+          image: emirjr/m3-imagen:v5
           ports:
             - containerPort: 8090
           env:
