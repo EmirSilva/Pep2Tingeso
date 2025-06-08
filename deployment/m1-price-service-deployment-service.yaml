@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m1-price
-          image: emirjr/m1-imagen:v13 # Asegúrate que esta es la última etiqueta que usaste
+          image: emirjr/m1-imagen:v14 # Asegúrate que esta es la última etiqueta que usaste
           ports:
             - containerPort: 8090 # O el puerto de tu aplicación (normalmente 8080)
           env:
