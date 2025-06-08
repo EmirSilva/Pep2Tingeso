@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend-server-container
-        image: emirjr/frontend-image:v2 # imagen docker
+        image: emirjr/frontend-image:v3 # imagen docker
         ports:
         - containerPort: 80 # puerto en el que escucha frontend
 ---
