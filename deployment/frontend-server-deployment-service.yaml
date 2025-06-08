@@ -16,21 +16,22 @@ spec:
     spec:
       containers:
       - name: frontend-server-container
-        image: emirjr/frontend-image # imagen docker
+        image: emirjr/frontend-image:v1 # imagen docker
         ports:
         - containerPort: 80 # puerto en el que escucha frontend
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-server-service # nombre del servicio
+  name: frontend-server-service
   labels:
-    app: frontend-server-deployment
+    app: frontend-server-deployment # Asegúrate que este label coincide con el del pod en el Deployment
 spec:
   selector:
-    app: frontend-server-deployment
+    app: frontend-server-deployment # Este debe coincidir con el label 'app' del template del pod
   ports:
     - protocol: TCP
-      port: 80       # Puerto en el que el servicio escucha
-      targetPort: 80 # Puerto del contenedor al que se redirigirá el tráfico
-  type: LoadBalancer # Expone el servicio externamente
+      port: 80       # Puerto del servicio (interno en el cluster)
+      targetPort: 80 # Puerto del contenedor (Nginx escucha en 80)
+      nodePort: 31606 # <--- ¡IMPORTANTE! Especificamos el NodePort que usaremos
+  type: NodePort # <--- ¡CAMBIA ESTO de LoadBalancer a NodePort!
