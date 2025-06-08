@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m4-holiday-discount
-          image: emirjr/m4-image:v5
+          image: emirjr/m4-imagen:v5
           ports:
             - containerPort: 8090
           env:
