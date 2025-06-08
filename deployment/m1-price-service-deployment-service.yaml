@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m1-price
-          image: emirjr/m1-imagen:v4
+          image: emirjr/m1-imagen:v5
           ports:
             - containerPort: 8090
           env:
