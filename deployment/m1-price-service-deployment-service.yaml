@@ -16,10 +16,15 @@ spec:
     spec:
       containers:
         - name: m1-price
-          image: emirjr/m1-imagen:v13
+          image: emirjr/m1-imagen:v13 # Asegúrate que esta es la última etiqueta que usaste
           ports:
-            - containerPort: 8090
+            - containerPort: 8090 # O el puerto de tu aplicación (normalmente 8080)
           env:
+            # Esta es la línea que resuelve el problema de "localhost" para Eureka
+            - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
+              value: "http://eureka-server-service:8761/eureka/"
+
+            # Variables de entorno para las credenciales de la base de datos (estas ya funcionan)
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -32,6 +37,8 @@ spec:
                   key: DB_PASSWORD
             - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
               value: org.postgresql.Driver
+
+            # Variables de entorno para la URL de la base de datos (estas también ya funcionan)
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
