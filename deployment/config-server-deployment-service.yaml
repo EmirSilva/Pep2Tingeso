@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: config-server
-          image: emirjr/config-image:v1
+          image: emirjr/config-image:v2
           ports:
             - containerPort: 8888
 ---

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: eureka-server
-          image: emirjr/eureka-image:v5
+          image: emirjr/eureka-image:v6
           ports:
             - containerPort: 8761
 ---

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gateway-server
-          image: emirjr/gateway-image:v3
+          image: emirjr/gateway-image:v5
           ports:
             - containerPort: 8080
 ---
