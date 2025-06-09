@@ -37,10 +37,10 @@ public class ReservationService {
     private RestTemplate restTemplate;
 
     //url de los otros microservicios
-    private final String priceServiceUrl = "http://price-service/prices";
-    private final String groupDiscountServiceUrl = "http://group-discount-service/group-discount";
-    private final String frequentCustomerDiscountServiceUrl = "http://visit-discount-service/visit-discount";
-    private final String holidayDiscountServiceUrl = "http://holiday-discount-service/holiday-discount";
+    private final String priceServiceUrl = "http://m1-price-service/prices";
+    private final String groupDiscountServiceUrl = "http://m2-group-discount-service/group-discount";
+    private final String frequentCustomerDiscountServiceUrl = "http://m3-visit-discount-service/visit-discount";
+    private final String holidayDiscountServiceUrl = "http://m4-holiday-discount-service/holiday-discount";
 
 
     //metodo para obtener la lista de asignaciones de usuario-kart para una reserva especifica
