@@ -36,7 +36,7 @@ public class ReservationController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
+    @PostMapping("/") // <--- Añade la barra aquí
     public ResponseEntity<ReservationEntity> createReservation(@RequestBody ReservationEntity reservation) {
         ReservationEntity savedReservation = reservationService.createReservation(reservation);
         return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
