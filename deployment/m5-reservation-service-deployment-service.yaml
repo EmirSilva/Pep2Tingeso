@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m5-reservation
-          image: emirjr/m5-imagen:v13
+          image: emirjr/m5-imagen:v14
           ports:
             - containerPort: 8090
           env:

@@ -30,7 +30,7 @@ public class RackSemanalController {
         return rackService.saveRack(rack);
     }
 
-    @PostMapping("/ocupar/{reservationId}")
+    @PostMapping("/ocupar")
     public ResponseEntity<Void> marcarComoOcupado(@PathVariable Long reservationId) {
         rackService.marcarComoOcupado(reservationId);
         return new ResponseEntity<>(HttpStatus.OK);

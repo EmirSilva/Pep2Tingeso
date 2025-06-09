@@ -107,7 +107,7 @@ public class ReservationService {
             }
             // Realizar la llamada POST al m6-rack-service para marcar el rack
             ResponseEntity<String> rackResponse = restTemplate.postForEntity(
-                    rackServiceUrl + "/ocupar/{reservationId}", // Endpoint POST /rack/ocupar
+                    rackServiceUrl + "/ocupar", // Endpoint POST /rack/ocupar
                     savedReservation, // Enviamos la ReservationEntity completa
                     String.class
             );
