@@ -2,6 +2,7 @@ package Backend.m6_rack_service.controllers;
 
 
 import Backend.m6_rack_service.entities.RackSemanalEntity;
+import Backend.m6_rack_service.model.ReservationEntity;
 import Backend.m6_rack_service.services.RackSemanalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,16 +31,27 @@ public class RackSemanalController {
         return rackService.saveRack(rack);
     }
 
+    // Endpoint para marcar el rack como ocupado (POST)
     @PostMapping("/ocupar")
-    public ResponseEntity<Void> marcarComoOcupado(@PathVariable Long reservationId) {
-        rackService.marcarComoOcupado(reservationId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<String> marcarComoOcupado(@RequestBody ReservationEntity reservation) { // Recibe la ReservationEntity del cuerpo de la petición
+        try {
+            rackService.marcarComoOcupado(reservation);
+            return new ResponseEntity<>("Espacio en rack marcado como ocupado exitosamente.", HttpStatus.OK);
+        } catch (Exception e) {
+            // Capturamos cualquier excepción del servicio y devolvemos un error 500 con el mensaje
+            return new ResponseEntity<>("Error al marcar espacio en rack como ocupado: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PostMapping("/liberar/{reservationId}")
-    public ResponseEntity<Void> marcarComoLibre(@PathVariable Long reservationId) {
-        rackService.marcarComoLibre(reservationId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    // Endpoint para marcar el rack como libre (DELETE)
+    @DeleteMapping("/libre/{reservationId}")
+    public ResponseEntity<String> marcarComoLibre(@PathVariable Long reservationId) {
+        try {
+            rackService.marcarComoLibre(reservationId);
+            return new ResponseEntity<>("Espacio en rack marcado como libre exitosamente.", HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error al marcar espacio en rack como libre: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/availability")

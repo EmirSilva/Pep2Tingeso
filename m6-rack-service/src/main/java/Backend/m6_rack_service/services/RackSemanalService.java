@@ -4,6 +4,7 @@ import Backend.m6_rack_service.entities.RackSemanalEntity;
 import Backend.m6_rack_service.model.ReservationEntity;
 import Backend.m6_rack_service.model.UserEntity;
 import Backend.m6_rack_service.repositories.RackSemanalRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,38 +39,36 @@ public class RackSemanalService {
         return rackRepository.save(rack);
     }
 
-    //metodo para marcar un espacio en el rack semanal como ocupado segun la reserva
-    //se registra con el nombre del usuario que hizo la reserva
-    public void marcarComoOcupado(Long reservationId) {
+    // Método para marcar un espacio en el rack semanal como ocupado según la reserva
+    @Transactional
+    public void marcarComoOcupado(ReservationEntity reservation) { // Ahora recibe ReservationEntity directamente
         try {
-            ResponseEntity<ReservationEntity> response = restTemplate.getForEntity(
-                    reservationServiceUrl + reservationId,
-                    ReservationEntity.class
-            );
-            if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
-                ReservationEntity reservation = response.getBody();
-                LocalDateTime fechaHora = reservation.getReservationDate().atTime(reservation.getReservationTime());
-                String reservadoPor = null;
-                if (!reservation.getUsuarios().isEmpty() && reservation.getUsuarios().get(0) != null) {
-                    reservadoPor = reservation.getUsuarios().get(0).getName();
-                }
+            // Log para depuración: ¿Qué ReservationEntity estoy recibiendo?
+            System.out.println("m6-rack-service: Recibiendo reserva para marcar como ocupado. ID: " + reservation.getId() + ", Fecha: " + reservation.getReservationDate() + ", Hora: " + reservation.getReservationTime());
 
-                RackSemanalEntity rack = rackRepository.findByFechaHora(fechaHora);
-                if (rack != null) {
-                    rack.setEstado("ocupado");
-                    rack.setReservadoPor(reservadoPor);
-                    rack.setReservationId(reservationId);
-                    rackRepository.save(rack);
-                } else {
-                    RackSemanalEntity nuevoRack = new RackSemanalEntity(fechaHora, "ocupado", reservadoPor);
-                    nuevoRack.setReservationId(reservationId);
-                    rackRepository.save(nuevoRack);
-                }
+            LocalDateTime fechaHora = reservation.getReservationDate().atTime(reservation.getReservationTime());
+            String reservadoPor = null;
+            if (reservation.getUsuarios() != null && !reservation.getUsuarios().isEmpty() && reservation.getUsuarios().get(0) != null) {
+                reservadoPor = reservation.getUsuarios().get(0).getName();
+            }
+
+            RackSemanalEntity rack = rackRepository.findByFechaHora(fechaHora);
+            if (rack != null) {
+                rack.setEstado("ocupado");
+                rack.setReservadoPor(reservadoPor);
+                rack.setReservationId(reservation.getId());
+                rackRepository.save(rack);
+                System.out.println("m6-rack-service: Rack existente actualizado a ocupado para reserva ID: " + reservation.getId());
             } else {
-                System.err.println("No se pudo obtener la reserva con ID: " + reservationId + ". Status: " + response.getStatusCode());
+                RackSemanalEntity nuevoRack = new RackSemanalEntity(fechaHora, "ocupado", reservadoPor);
+                nuevoRack.setReservationId(reservation.getId());
+                rackRepository.save(nuevoRack);
+                System.out.println("m6-rack-service: Nuevo rack creado como ocupado para reserva ID: " + reservation.getId());
             }
         } catch (Exception e) {
-            System.err.println("Error al comunicarse con el servicio de reservas: " + e.getMessage());
+            System.err.println("Error al marcar como ocupado en rack semanal en m6-rack-service: " + e.getMessage());
+            e.printStackTrace(); // ¡Importante para ver el stack trace completo!
+            throw new RuntimeException("Error interno en m6-rack-service al marcar rack: " + e.getMessage(), e); // Propagar para que m5 vea el error completo
         }
     }
 
