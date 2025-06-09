@@ -10,6 +10,8 @@ import Backend.m5_reservation_service.repositories.UserRepository;
 import Backend.m5_reservation_service.repositories.KartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,7 +43,7 @@ public class ReservationService {
     private final String groupDiscountServiceUrl = "http://m2-group-discount-service/group-discount";
     private final String frequentCustomerDiscountServiceUrl = "http://m3-cliente-frecuente-service/visit-discount";
     private final String holidayDiscountServiceUrl = "http://m4-holiday-discount-service/holiday-discount";
-
+    private final String rackServiceUrl = "http://m6-rack-service/rack";
 
     //metodo para obtener la lista de asignaciones de usuario-kart para una reserva especifica
     public List<UserKartAssignmentEntity> getUserKartAssignmentsByReservationId(Long reservationId) {
@@ -97,7 +99,32 @@ public class ReservationService {
         double totalPrice = calculateBestTotalPrice(savedReservation, reservingUser != null ? reservingUser.getMonthlyVisits() : 0);
         savedReservation.setTotalPrice(totalPrice);
 
-        //guardar la reserva con el precio total
+        // --- INICIO: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE ---
+        try {
+            // Asegurarse de que la reserva guardada tenga su ID antes de enviarla
+            if (savedReservation.getId() == null) {
+                savedReservation = reservationRepository.save(savedReservation); // Guarda de nuevo si el ID no está
+            }
+            // Realizar la llamada POST al m6-rack-service para marcar el rack
+            ResponseEntity<String> rackResponse = restTemplate.postForEntity(
+                    rackServiceUrl + "/ocupar/{reservationId}", // Endpoint POST /rack/ocupar
+                    savedReservation, // Enviamos la ReservationEntity completa
+                    String.class
+            );
+
+            if (rackResponse.getStatusCode() == HttpStatus.OK) {
+                System.out.println("Espacio en rack marcado exitosamente por m6-rack-service.");
+            } else {
+                System.err.println("Error al marcar espacio en rack por m6-rack-service. Status: " + rackResponse.getStatusCode());
+            }
+        } catch (Exception e) {
+            System.err.println("Error al comunicarse con m6-rack-service para marcar el rack: " + e.getMessage());
+            e.printStackTrace(); // Para depuración
+        }
+        // --- FIN: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE ---
+
+
+        //guardar la reserva con el precio total (y las asignaciones si no se hizo en la primera salvada)
         return reservationRepository.save(savedReservation);
     }
 
@@ -130,6 +157,17 @@ public class ReservationService {
                 kartRepository.save(kart);
                 userKartAssignmentRepository.delete(assignment);
             }
+            // --- INICIO: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE PARA LIBERAR ---
+            try {
+                // Realizar la llamada DELETE al m6-rack-service para liberar el rack
+                restTemplate.delete(rackServiceUrl + "/liberar/{reservationId}", id);
+                System.out.println("Espacio en rack liberado exitosamente por m6-rack-service.");
+            } catch (Exception e) {
+                System.err.println("Error al comunicarse con m6-rack-service para liberar el rack: " + e.getMessage());
+                e.printStackTrace(); // Para depuración
+            }
+            // --- FIN: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE PARA LIBERAR ---
+
             reservationRepository.deleteById(id);
             return true;
         }
