@@ -13,9 +13,4 @@ public class M5ReservationServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(M5ReservationServiceApplication.class, args);
 	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
 }

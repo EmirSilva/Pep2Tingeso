@@ -13,9 +13,4 @@ public class M7ReportServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(M7ReportServiceApplication.class, args);
 	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
 }

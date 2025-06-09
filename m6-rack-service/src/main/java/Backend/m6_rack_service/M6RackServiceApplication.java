@@ -13,9 +13,4 @@ public class M6RackServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(M6RackServiceApplication.class, args);
 	}
-
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
 }
