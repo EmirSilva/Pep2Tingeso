@@ -39,7 +39,7 @@ public class ReservationService {
     //url de los otros microservicios
     private final String priceServiceUrl = "http://m1-price-service/prices";
     private final String groupDiscountServiceUrl = "http://m2-group-discount-service/group-discount";
-    private final String frequentCustomerDiscountServiceUrl = "http://m3-visit-discount-service/visit-discount";
+    private final String frequentCustomerDiscountServiceUrl = "http://m3-cliente-frecuente-service/visit-discount";
     private final String holidayDiscountServiceUrl = "http://m4-holiday-discount-service/holiday-discount";
 
 

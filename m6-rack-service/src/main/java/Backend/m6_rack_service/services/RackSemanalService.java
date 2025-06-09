@@ -26,7 +26,7 @@ public class RackSemanalService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private final String reservationServiceUrl = "http://reservation-service/reservations/";
+    private final String reservationServiceUrl = "http://m5-reservation-service/reservations/";
 
     //metodo para obtener una lista de todos los registros del rack semanal
     public List<RackSemanalEntity> getAllRacks() {

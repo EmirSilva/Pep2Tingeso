@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: m3-cliente-frecuente-service # <-- ¡Este nombre es CRUCIAL y debe ser usado por m5-reservation-service!
+spec:
+  selector:
+    app: m3-cliente-frecuente-service # Debe coincidir con la etiqueta 'app' en tu Deployment de m1-price-service
+  ports:
+    - protocol: TCP
+      port: 8090 # El puerto en el que m1-price-service escucha DENTRO del pod
+      targetPort: 8090 # El mismo puerto del pod
+  type: ClusterIP # Tipo de servicio: accesible solo dentro del cluster
