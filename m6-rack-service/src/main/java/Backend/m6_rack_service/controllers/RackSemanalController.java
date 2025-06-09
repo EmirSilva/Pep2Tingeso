@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/rack")
-@CrossOrigin
 public class RackSemanalController {
     @Autowired
     private RackSemanalService rackService;

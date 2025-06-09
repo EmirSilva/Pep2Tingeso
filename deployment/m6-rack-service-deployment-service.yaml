@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: m6-rack
-          image: emirjr/m6-imagen:v8
+          image: emirjr/m6-imagen:v9
           ports:
             - containerPort: 8090
           env:
