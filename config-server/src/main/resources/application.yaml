@@ -1,15 +1,15 @@
 server:
-  port: 8888
+  port: 8888      #puerto del config server
 
 spring:
   cloud:
     config:
       server:
         git:
-          uri: https://github.com/EmirSilva/Pep2Tingeso.git
+          uri: https://github.com/EmirSilva/Pep2Tingeso.git   #repositorio de configuracion
           clone-on-start: true
-          default-label: main
+          default-label: main   #rama por defecto
           search-paths:
-            - config-data
+            - config-data       #ruta donde se encuentran los archivos de configuracion
   application:
-    name: config-server
+    name: config-server         #nombre de la aplicacion

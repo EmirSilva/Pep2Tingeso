@@ -24,7 +24,7 @@ public class HolidayDiscountService {
     public double applyHolidayDiscount(double price, LocalDate reservationDate) {
         Optional<HolidayDiscountEntity> holiday = holidayRepository.findByHolidayDate(reservationDate);
         if (holiday.isPresent()) {
-            return price * (1 - defaultHolidayDiscount); // Usando el descuento por defecto
+            return price * (1 - defaultHolidayDiscount);
         }
         return price;
     }

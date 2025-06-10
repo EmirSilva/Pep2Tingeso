@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gateway-server-deployment
+  name: gateway-server-deployment                 #nombre para deployment dentro del cluster
   labels:
-    app: gateway-server-deployment
+    app: gateway-server-deployment                #etiquetas que identifican el deployment
 spec:
-  selector:
+  selector:                                       #el selector define que pods seran gestionados por el deployment
     matchLabels:
-      app: gateway-server-deployment
-  replicas: 1
+      app: gateway-server-deployment              #solo gestionara pods que tengan la etiqueta 'app: gateway-server-deployment'
+  replicas: 1                                     #numero de replicas del pod que se desea mantener en ejecucion (pod)
   template:
     metadata:
       labels:
-        app: gateway-server-deployment
+        app: gateway-server-deployment            #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-        - name: gateway-server
-          image: emirjr/gateway-image:v5
+        - name: gateway-server                    #nombre del contenedor dentro del pod
+          image: emirjr/gateway-image:v5          #imagen
           ports:
-            - containerPort: 8080
+            - containerPort: 8080                 #puerto en el que el contenedor escucha dentro del pod
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: gateway-server-service
+  name: gateway-server-service                    #nombre del servicio que permite acceder al deployment
   labels:
-    app: gateway-server-service
+    app: gateway-server-service                   #etiquetas que identifican el servicio
 spec:
   selector:
-    app: gateway-server-deployment
+    app: gateway-server-deployment                #selecciona los pods que tienen la etiqueta 'app: gateway-server-deployment'
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
-  type: LoadBalancer
+      port: 8080                                  #puerto en el que el servicio escuchara dentro del cluster
+      targetPort: 8080                            #puerto del contenedor al que se redirigira el trafico
+  type: LoadBalancer                              #comunicacion externa (expone afuera del cluster)

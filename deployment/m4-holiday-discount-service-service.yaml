@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: m4-holiday-discount-service # <-- ¡Este nombre es CRUCIAL y debe ser usado por m5-reservation-service!
+  name: m4-holiday-discount-service                #nombre del Service
 spec:
-  selector:
-    app: m4-holiday-discount-service # Debe coincidir con la etiqueta 'app' en tu Deployment de m1-price-service
+  selector:                                        #selecciona los pods que tienen la etiqueta 'app: m4-holiday-discount-service'
+    app: m4-holiday-discount-service               #debe coincidir con la etiqueta 'app' del deployment de m4-holiday-discount-service
   ports:
     - protocol: TCP
-      port: 8090 # El puerto en el que m1-price-service escucha DENTRO del pod
-      targetPort: 8090 # El mismo puerto del pod
-  type: ClusterIP # Tipo de servicio: accesible solo dentro del cluster
+      port: 8090                                   #puerto en el que m4-holiday-discount-service escuchara dentro del cluster
+      targetPort: 8090                             #puerto del contenedor al que se redirigira el trafico
+  type: ClusterIP                                  #comunicacion interna (no expone afuera del cluster)

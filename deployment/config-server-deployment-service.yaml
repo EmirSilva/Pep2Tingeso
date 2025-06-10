@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: config-server-deployment
+  name: config-server-deployment            #nombre para deployment dentro del cluster
   labels:
-    app: config-server-deployment
+    app: config-server-deployment           #etiquetas que identifican el deployment
 spec:
-  selector:
+  selector:                                 #el selector define que pods seran gestionados por el deployment
     matchLabels:
-      app: config-server-deployment
-  replicas: 1
+      app: config-server-deployment         #solo gestionara pods que tengan la etiqueta 'app: config-server-deployment'
+  replicas: 1                               #numero de replicas del pod que se desea mantener en ejecucion (pod)
   template:
     metadata:
       labels:
-        app: config-server-deployment
+        app: config-server-deployment       #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-        - name: config-server
-          image: emirjr/config-image:v2
+        - name: config-server               #nombre del contenedor dentro del pod
+          image: emirjr/config-image:v2     #imagen
           ports:
-            - containerPort: 8888
+            - containerPort: 8888           #puerto en el que el contenedor escucha dentro del pod
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: config-server-service
+  name: config-server-service               #nombre del servicio que permite acceder al deployment
   labels:
-    app: config-server-service
+    app: config-server-service              #etiquetas que identifican el servicio
 spec:
   selector:
-    app: config-server-deployment
+    app: config-server-deployment           #selecciona los pods que tienen la etiqueta 'app: config-server-deployment'
   ports:
     - protocol: TCP
-      port: 8888
-      targetPort: 8888
-  type: ClusterIP
+      port: 8888                            #puerto en el que el servicio escuchara dentro del cluster
+      targetPort: 8888                      #puerto del contenedor al que se redirigira el trafico
+  type: ClusterIP                           #comunicacion interna (no expone afuera del cluster)

@@ -1,38 +1,36 @@
 server:
-  port: 8080
+  port: 8080      #puerto del gateway
 
 eureka:
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: true          #debe obtener y mantener una copia local de Eureka
+    register-with-eureka: true    #debe registrarse con el Eureka Server
     service-url:
-      defaultZone: http://eureka-server-service:8761/eureka/
+      defaultZone: http://eureka-server-service:8761/eureka/      #url del Eureka Server
 
 spring:
   cloud:
     gateway:
       discovery:
         locator:
-          enabled: true
-      globalcors:
+          enabled: true     #genera rutas automaticamente para cada servicio registrado en Eureka
+      globalcors:           #configuracion global de CORS
         cors-configurations:
-          '[/**]':
-            # Cambia de allowedOrigins a allowedOriginPatterns
-            allowedOriginPatterns: "http://*" # <-- CAMBIA ESTO
-            allowedMethods:
+          '[/**]':          #aplica esta configuracion CORS a todas las rutas
+            allowedOriginPatterns: "http://*"       #permite cualquier origen http
+            allowedMethods:     #metodos http permitidos
               - GET
               - POST
               - PUT
               - DELETE
-              - OPTIONS # <--- Asegúrate de que OPTIONS también esté aquí, es crucial para CORS
-            allowedHeaders: "*"
+              - OPTIONS
+            allowedHeaders: "*"     #permite cualquier encabezado
             allowCredentials: true
-            maxAge: 3600 # Puedes añadir esto para caché de pre-vuelo
-      routes:
-        - id: m1-price-service
-          uri: lb://m1-price-service
+      routes:     #definicion explicita de rutas para el gateway
+        - id: m1-price-service        #identificador de la ruta
+          uri: lb://m1-price-service  #uri del servicio, lb:// indica que se usara el balanceador de carga
           predicates:
-            - Path=/prices/**
+            - Path=/prices/**         #cualquier solicitud que comience con /prices/ se dirigira a este servicio
         - id: m2-group-discount-service
           uri: lb://m2-group-discount-service
           predicates:

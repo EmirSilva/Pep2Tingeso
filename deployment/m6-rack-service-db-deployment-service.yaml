@@ -1,59 +1,59 @@
 apiVersion: v1
-kind: PersistentVolume
+kind: PersistentVolume                                  #recurso de almacenamiento en el cluster
 metadata:
-  name: m6-rack-service-db-pv
+  name: m6-rack-service-db-pv                           #nombre unico para este PersistentVolume
   labels:
-    type: local
+    type: local                                         #tipo de almacenamiento, en este caso local
 spec:
-  storageClassName: standard
+  storageClassName: standard                            #nombre de la clase de almacenamiento, debe coincidir con el PVC
   capacity:
-    storage: 1Gi
+    storage: 1Gi                                        #capacidad de almacenamiento del PV
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce                                     #modo de acceso, solo un nodo puede montar este volumen en modo lectura/escritura
   hostPath:
-    path: "/data/m6-rack-service-db-data" # Asegúrate de que esta ruta exista en tu Minikube
+    path: "/data/m6-rack-service-db-data"               #ruta en el host donde se almacenara el volumen
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolumeClaim                             #recurso que solicita almacenamiento del PersistentVolume
 metadata:
-  name: m6-rack-service-db-pvc
+  name: m6-rack-service-db-pvc                          #nombre del PersistentVolumeClaim
   labels:
-    app: postgres
-    tier: database
+    app: postgres                                       #etiqueta que identifica el PVC
+    tier: database                                      #etiqueta adicional para clasificar el PVC
 spec:
-  storageClassName: standard
+  storageClassName: standard                            #nombre de la clase de almacenamiento, debe coincidir con el PV
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteOnce                                     #modo de acceso, debe coincidir con el PV
   resources:
     requests:
-      storage: 1Gi
+      storage: 1Gi                                      #cantidad de almacenamiento solicitada por el PVC
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: m6-rack-service-db-deployment
+  name: m6-rack-service-db-deployment                   #nombre del deployment para el servicio de base de datos
   labels:
-    app: m6-rack-service-db
-    tier: database
+    app: m6-rack-service-db                             #etiqueta que identifica el deployment
+    tier: database                                      #etiqueta adicional para clasificar el deployment
 spec:
   selector:
     matchLabels:
-      app: m6-rack-service-db
+      app: m6-rack-service-db                           #el selector define que pods seran gestionados por este deployment
   strategy:
-    type: Recreate
+    type: Recreate                                      #estrategia de actualizacion, en este caso se recrean los pods
   template:
     metadata:
       labels:
-        app: m6-rack-service-db
-        tier: database
+        app: m6-rack-service-db                         #etiquetas que se asignaran a los pods creados por este deployment
+        tier: database                                  #etiqueta adicional para clasificar los pods
     spec:
-      containers:
-        - name: rack-db
-          image: postgres
-          imagePullPolicy: "IfNotPresent"
+      containers:                                       #lista de contenedores que se ejecutaran en los pods
+        - name: rack-db                                 #nombre del contenedor dentro del pod
+          image: postgres                               #imagen de la base de datos PostgreSQL
+          imagePullPolicy: "IfNotPresent"               #politica de extraccion de imagen, si no esta presente se extrae
           ports:
-            - containerPort: 5432
-          env:
+            - containerPort: 5432                       #puerto en el que escucha la base de datos dentro del pod
+          env:                                          #variables de entorno para configurar la base de datos
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
@@ -65,28 +65,28 @@ spec:
                   name: postgres-credentials
                   key: DB_PASSWORD
             - name: POSTGRES_DB
-              value: m6-rack-service-db # Nombre de la base de datos que se creará
+              value: m6-rack-service-db                 #nombre de la base de datos que se creará
           volumeMounts:
-            - mountPath: /var/lib/postgresql/data
-              name: m6-rack-service-db-data
+            - mountPath: /var/lib/postgresql/data       #ruta donde se montara el volumen de datos de la base de datos
+              name: m6-rack-service-db-data             #nombre del volumen que se montara
       volumes:
-        - name: m6-rack-service-db-data
+        - name: m6-rack-service-db-data                 #volumen que se montara en el contenedor
           persistentVolumeClaim:
-            claimName: m6-rack-service-db-pvc
+            claimName: m6-rack-service-db-pvc           #nombre del PersistentVolumeClaim que solicita el almacenamiento
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: m6-rack-service-db-service # Nombre del servicio para la base de datos
+  name: m6-rack-service-db-service                     #nombre del servicio para la base de datos
   labels:
-    app: m6-rack-service-db
-    tier: database
+    app: m6-rack-service-db                            #etiqueta que identifica el servicio
+    tier: database                                     #etiqueta adicional para clasificar el servicio
 spec:
   ports:
-    - port: 5432
-      targetPort: 5432
+    - port: 5432                                       #puerto en el que el servicio escuchara
+      targetPort: 5432                                 #puerto del contenedor al que se redirigira el trafico
       protocol: TCP
   selector:
-    app: m6-rack-service-db
-    tier: database
-  type: ClusterIP
+    app: m6-rack-service-db                            #selecciona los pods con esta etiqueta
+    tier: database                                     #etiqueta adicional para clasificar el servicio
+  type: ClusterIP                                      #comunicacion interna (no expone afuera del cluster)

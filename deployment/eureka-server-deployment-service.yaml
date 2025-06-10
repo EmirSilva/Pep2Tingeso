@@ -1,36 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: eureka-server-deployment
+  name: eureka-server-deployment              #nombre para deployment dentro del cluster
   labels:
-    app: eureka-server-deployment
+    app: eureka-server-deployment             #etiquetas que identifican el deployment
 spec:
-  selector:
+  selector:                                   #el selector define que pods seran gestionados por el deployment
     matchLabels:
-      app: eureka-server-deployment
-  replicas: 1
+      app: eureka-server-deployment           #solo gestionara pods que tengan la etiqueta 'app: eureka-server-deployment'
+  replicas: 1                                 #numero de replicas del pod que se desea mantener en ejecucion (pod)
   template:
     metadata:
       labels:
-        app: eureka-server-deployment
+        app: eureka-server-deployment         #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-        - name: eureka-server
-          image: emirjr/eureka-image:v6
+        - name: eureka-server                 #nombre del contenedor dentro del pod
+          image: emirjr/eureka-image:v6       #imagen
           ports:
-            - containerPort: 8761
+            - containerPort: 8761             #puerto en el que el contenedor escucha dentro del pod
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: eureka-server-service
+  name: eureka-server-service                 #nombre del servicio que permite acceder al deployment
   labels:
-    app: eureka-server-service
+    app: eureka-server-service                #etiquetas que identifican el servicio
 spec:
   selector:
-    app: eureka-server-deployment
+    app: eureka-server-deployment             #selecciona los pods que tienen la etiqueta 'app: eureka-server-deployment'
   ports:
     - protocol: TCP
-      port: 8761
-      targetPort: 8761
-  type: NodePort
+      port: 8761                              #puerto en el que el servicio escuchara dentro del cluster  (debe coincidir con el puerto del contenedor)
+      targetPort: 8761                        #puerto del contenedor al que se redirigira el trafico  (accede desde fuera del cluster)
+      #para que funcione, el valor de nodeport debe estar entre 30000 y 32767
+  type: NodePort                              #comunicacion interna (no expone a fuera del cluster)

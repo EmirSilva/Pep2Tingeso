@@ -1,6 +1,5 @@
 package Backend.m6_rack_service.controllers;
 
-
 import Backend.m6_rack_service.entities.RackSemanalEntity;
 import Backend.m6_rack_service.model.ReservationEntity;
 import Backend.m6_rack_service.services.RackSemanalService;
@@ -31,19 +30,16 @@ public class RackSemanalController {
         return rackService.saveRack(rack);
     }
 
-    // Endpoint para marcar el rack como ocupado (POST)
     @PostMapping("/ocupar")
-    public ResponseEntity<String> marcarComoOcupado(@RequestBody ReservationEntity reservation) { // Recibe la ReservationEntity del cuerpo de la petición
+    public ResponseEntity<String> marcarComoOcupado(@RequestBody ReservationEntity reservation) {
         try {
             rackService.marcarComoOcupado(reservation);
             return new ResponseEntity<>("Espacio en rack marcado como ocupado exitosamente.", HttpStatus.OK);
         } catch (Exception e) {
-            // Capturamos cualquier excepción del servicio y devolvemos un error 500 con el mensaje
             return new ResponseEntity<>("Error al marcar espacio en rack como ocupado: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    // Endpoint para marcar el rack como libre (DELETE)
     @DeleteMapping("/libre/{reservationId}")
     public ResponseEntity<String> marcarComoLibre(@PathVariable Long reservationId) {
         try {

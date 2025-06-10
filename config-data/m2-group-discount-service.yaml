@@ -1,15 +1,14 @@
-# config-data/m2-group-discount-service.yaml (en tu repositorio de GitHub)
 server:
-  port: ${PORT:${SERVER_PORT:0}}
+  port: ${PORT:${SERVER_PORT:0}}      #usa una variable de entorno cuyo valor es dinamico (aleatorio)
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB_NAME}   #url de conexion a la base de datos
   jpa:
     hibernate:
       ddl-auto: update
 eureka:
   instance:
-    preferIpAddress: true
+    preferIpAddress: true         #prioriza usar la IP del contenedor
   client:
-    fetch-registry: true
-    register-with-eureka: true
+    fetch-registry: true          #le indica al ms que debe obtener y mantener una copia local de Eureka
+    register-with-eureka: true    #le indica a este microservicio que debe registrarse con el Eureka Server

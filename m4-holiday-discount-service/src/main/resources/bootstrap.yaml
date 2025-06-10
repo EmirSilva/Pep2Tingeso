@@ -1,5 +1,7 @@
+#aqui se configura el nombre de la aplicacion y la url del config server. Este archivo se carga antes
 spring:
   application:
-    name: m4-holiday-discount-service
-  config: # <-- Nota el cambio: 'config' directamente bajo 'spring'
-    import: optional:configserver:http://config-server-service:8888 # <--- ¡NUEVO FORMATO!
+    name: m4-holiday-discount-service   #nombre de la aplicacion
+  config:
+    import: optional:configserver:http://config-server-service:8888     #url del config server
+    #se ocupa el optional para que no falle si el servidor de configuracion no esta disponible

@@ -1,31 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: m1-price-service-deployment
+  name: m1-price-service-deployment                             #nombre para deployment dentro del cluster
   labels:
-    app: m1-price-service
+    app: m1-price-service                                       #etiquetas que identifican el deployment
 spec:
-  replicas: 1
+  replicas: 1                                                   #numero de replicas del pod que se desea mantener en ejecucion (pod)
   selector:
     matchLabels:
-      app: m1-price-service
+      app: m1-price-service                                     #solo gestionara pods que tengan la etiqueta 'app: m1-price-service'
   template:
     metadata:
       labels:
-        app: m1-price-service
+        app: m1-price-service                                   #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-        - name: m1-price
-          image: emirjr/m1-imagen:v14 # Asegúrate que esta es la última etiqueta que usaste
+        - name: m1-price                                        #nombre del contenedor dentro del pod
+          image: emirjr/m1-imagen:v14                           #imagen
           ports:
-            - containerPort: 8090 # O el puerto de tu aplicación (normalmente 8080)
+            - containerPort: 8090                               #puerto en el que el contenedor escucha dentro del pod
           env:
-            # Esta es la línea que resuelve el problema de "localhost" para Eureka
+            #resuelve el problema de "localhost" para Eureka
             - name: EUREKA_CLIENT_SERVICEURL_DEFAULTZONE
-              value: "http://eureka-server-service:8761/eureka/"
+              value: "http://eureka-server-service:8761/eureka/"    #URL del servidor Eureka
 
-            # Variables de entorno para las credenciales de la base de datos (estas ya funcionan)
-            - name: SPRING_DATASOURCE_USERNAME
+            #variables de entorno para las credenciales de la base de datos
+            - name: SPRING_DATASOURCE_USERNAME                  #nombre de usuario de la base de datos
               valueFrom:
                 secretKeyRef:
                   name: postgres-credentials
@@ -35,10 +35,10 @@ spec:
                 secretKeyRef:
                   name: postgres-credentials
                   key: DB_PASSWORD
-            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
-              value: org.postgresql.Driver
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME         #clase del controlador de la base de datos
+              value: org.postgresql.Driver                      #controlador de PostgreSQL
 
-            # Variables de entorno para la URL de la base de datos (estas también ya funcionan)
+            #variables de entorno para la URL de la base de datos
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:

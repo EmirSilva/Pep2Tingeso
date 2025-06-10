@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-server-deployment #nombre del Deployment
+  name: frontend-server-deployment                          #nombre para deployment dentro del cluster
   labels:
-    app: frontend-server-deployment
+    app: frontend-server-deployment                         #etiquetas que identifican el deployment
 spec:
-  selector:
+  selector:                                                 #el selector define que pods seran gestionados por el deployment
     matchLabels:
-      app: frontend-server-deployment
-  replicas: 1
+      app: frontend-server-deployment                       #solo gestionara pods que tengan la etiqueta 'app: frontend-server-deployment'
+  replicas: 1                                               #numero de replicas del pod que se desea mantener en ejecucion (pod)
   template:
     metadata:
       labels:
-        app: frontend-server-deployment
+        app: frontend-server-deployment                     #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-      - name: frontend-server-container
-        image: emirjr/frontend-image:v6 # imagen docker
+      - name: frontend-server-container                     #nombre del contenedor dentro del pod
+        image: emirjr/frontend-image:v6                     #imagen
         ports:
-        - containerPort: 80 # puerto en el que escucha frontend
+        - containerPort: 80                                 #puerto en el que el contenedor escucha dentro del pod
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-server-service # nombre del servicio
+  name: frontend-server-service                             #nombre del servicio que permite acceder al deployment
   labels:
-    app: frontend-server-deployment
+    app: frontend-server-deployment                         #etiquetas que identifican el servicio
 spec:
   selector:
-    app: frontend-server-deployment
+    app: frontend-server-deployment                         #selecciona los pods que tienen la etiqueta 'app: frontend-server-deployment'
   ports:
     - protocol: TCP
-      port: 80       # Puerto en el que el servicio escucha
-      targetPort: 80 # Puerto del contenedor al que se redirigirá el tráfico
-  type: LoadBalancer # Expone el servicio externamente
+      port: 80                                              #puerto en el que el servicio escuchara dentro del cluster
+      targetPort: 80                                        #puerto del contenedor al que se redirigira el trafico
+  type: LoadBalancer                                        #comunicacion externa (expone afuera del cluster)

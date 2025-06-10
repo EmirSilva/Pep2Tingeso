@@ -2,7 +2,6 @@ package Backend.m6_rack_service.services;
 
 import Backend.m6_rack_service.entities.RackSemanalEntity;
 import Backend.m6_rack_service.model.ReservationEntity;
-import Backend.m6_rack_service.model.UserEntity;
 import Backend.m6_rack_service.repositories.RackSemanalRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +38,10 @@ public class RackSemanalService {
         return rackRepository.save(rack);
     }
 
-    // Método para marcar un espacio en el rack semanal como ocupado según la reserva
+    //metodo para marcar un espacio en el rack semanal como ocupado segun la reserva
     @Transactional
-    public void marcarComoOcupado(ReservationEntity reservation) { // Ahora recibe ReservationEntity directamente
+    public void marcarComoOcupado(ReservationEntity reservation) {
         try {
-            // Log para depuración: ¿Qué ReservationEntity estoy recibiendo?
-            System.out.println("m6-rack-service: Recibiendo reserva para marcar como ocupado. ID: " + reservation.getId() + ", Fecha: " + reservation.getReservationDate() + ", Hora: " + reservation.getReservationTime());
-
             LocalDateTime fechaHora = reservation.getReservationDate().atTime(reservation.getReservationTime());
             String reservadoPor = null;
             if (reservation.getUsuarios() != null && !reservation.getUsuarios().isEmpty() && reservation.getUsuarios().get(0) != null) {
@@ -58,17 +54,15 @@ public class RackSemanalService {
                 rack.setReservadoPor(reservadoPor);
                 rack.setReservationId(reservation.getId());
                 rackRepository.save(rack);
-                System.out.println("m6-rack-service: Rack existente actualizado a ocupado para reserva ID: " + reservation.getId());
             } else {
                 RackSemanalEntity nuevoRack = new RackSemanalEntity(fechaHora, "ocupado", reservadoPor);
                 nuevoRack.setReservationId(reservation.getId());
                 rackRepository.save(nuevoRack);
-                System.out.println("m6-rack-service: Nuevo rack creado como ocupado para reserva ID: " + reservation.getId());
             }
         } catch (Exception e) {
-            System.err.println("Error al marcar como ocupado en rack semanal en m6-rack-service: " + e.getMessage());
-            e.printStackTrace(); // ¡Importante para ver el stack trace completo!
-            throw new RuntimeException("Error interno en m6-rack-service al marcar rack: " + e.getMessage(), e); // Propagar para que m5 vea el error completo
+            System.err.println("Error al marcar como ocupado en rack semanal: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException("Error interno al marcar rack: " + e.getMessage(), e);
         }
     }
 

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: m6-rack-service # <-- ¡Este nombre es CRUCIAL y debe ser usado por m5-reservation-service!
+  name: m6-rack-service                          #nombre del Service
 spec:
-  selector:
-    app: m6-rack-service # Debe coincidir con la etiqueta 'app' en tu Deployment de m1-price-service
+  selector:                                      #selecciona los pods que tienen la etiqueta 'app: m6-rack-service'
+    app: m6-rack-service                         #debe coincidir con la etiqueta 'app' del deployment de m6-rack-service
   ports:
     - protocol: TCP
-      port: 8090 # El puerto en el que m1-price-service escucha DENTRO del pod
-      targetPort: 8090 # El mismo puerto del pod
-  type: ClusterIP # Tipo de servicio: accesible solo dentro del cluster
+      port: 8090                                 #puerto en el que m6-rack-service escuchara dentro del cluster
+      targetPort: 8090                           #puerto del contenedor al que se redirigira el trafico
+  type: ClusterIP                                #comunicacion interna (no expone afuera del cluster)

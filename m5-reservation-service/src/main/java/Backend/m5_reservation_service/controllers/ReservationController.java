@@ -36,7 +36,7 @@ public class ReservationController {
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/") // <--- Añade la barra aquí
+    @PostMapping("/")
     public ResponseEntity<ReservationEntity> createReservation(@RequestBody ReservationEntity reservation) {
         ReservationEntity savedReservation = reservationService.createReservation(reservation);
         return new ResponseEntity<>(savedReservation, HttpStatus.CREATED);
@@ -71,22 +71,17 @@ public class ReservationController {
             Integer duration = (Integer) payload.get("duration");
             String reservationDateStr = (String) payload.get("reservationDate");
             String reservationTimeStr = (String) payload.get("reservationTime");
-            // Nota: Es mejor usar Object en el segundo Map ya que los valores pueden ser de diferentes tipos, aunque aquí todos son Strings.
+
             List<Map<String, String>> usuariosPayload = (List<Map<String, String>>) payload.get("usuarios");
 
             if ((numLaps == null && duration == null) || reservationDateStr == null || reservationTimeStr == null || usuariosPayload == null) {
-                // Validación mejorada: al menos numLaps O duration deben tener un valor.
                 return ResponseEntity.badRequest().body(null);
             }
 
-            // Parsear la fecha y hora
             LocalDate reservationDate = LocalDate.parse(reservationDateStr);
-            // Asegurarse de que el formato de tiempo es correcto antes de parsear
-            // Asumimos que frontend siempre envía HH:mm:ss, así que no es necesario substring
             LocalTime reservationTime = LocalTime.parse(reservationTimeStr);
 
             ReservationEntity reservation = new ReservationEntity();
-            // Solo establecer si numLaps o duration son diferentes de null (y opcionalmente > 0)
             if (numLaps != null) {
                 reservation.setNumLaps(numLaps);
             }
@@ -100,7 +95,7 @@ public class ReservationController {
             List<UserEntity> usuarios = usuariosPayload.stream()
                     .map(userMap -> {
                         UserEntity user = new UserEntity();
-                        user.setName(userMap.get("name")); // <--- ¡¡¡AÑADE ESTA LÍNEA!!!
+                        user.setName(userMap.get("name"));
                         user.setDateOfBirth(LocalDate.parse(userMap.get("dateOfBirth")));
                         user.setEmail(userMap.get("email"));
                         return user;
@@ -111,7 +106,6 @@ public class ReservationController {
             int monthlyVisits = 0;
             if (!usuariosPayload.isEmpty()) {
                 String firstUserEmail = usuariosPayload.get(0).get("email");
-                //usar el userservice para obtener las visitas mensuales
                 UserEntity firstUser = reservationService.findByEmail(firstUserEmail);
                 if (firstUser != null) {
                     monthlyVisits = firstUser.getMonthlyVisits();
@@ -122,8 +116,7 @@ public class ReservationController {
             return ResponseEntity.ok(price);
 
         } catch (Exception e) {
-            // Logear la excepción completa para depuración
-            e.printStackTrace(); // <--- ¡Importante para depuración en Kubernetes!
+            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }

@@ -50,10 +50,9 @@ public class ReservationService {
         return userKartAssignmentRepository.findByReservationId(reservationId);
     }
 
-    //metodo que crea una nueva reserva, gestionando usuarios, asignando karts y calculando el precio total
+    //metodo que crea una nueva reserva
     @Transactional
     public ReservationEntity createReservation(ReservationEntity reservation) {
-        // Lógica para crear/encontrar usuarios
         List<UserEntity> usuarios = new ArrayList<>();
         UserEntity reservingUser = null;
         for (int i = 0; i < reservation.getUsuarios().size(); i++) {
@@ -99,32 +98,27 @@ public class ReservationService {
         double totalPrice = calculateBestTotalPrice(savedReservation, reservingUser != null ? reservingUser.getMonthlyVisits() : 0);
         savedReservation.setTotalPrice(totalPrice);
 
-        // --- INICIO: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE ---
         try {
-            // Asegurarse de que la reserva guardada tenga su ID antes de enviarla
             if (savedReservation.getId() == null) {
-                savedReservation = reservationRepository.save(savedReservation); // Guarda de nuevo si el ID no está
+                savedReservation = reservationRepository.save(savedReservation);
             }
-            // Realizar la llamada POST al m6-rack-service para marcar el rack
             ResponseEntity<String> rackResponse = restTemplate.postForEntity(
-                    rackServiceUrl + "/ocupar", // Endpoint POST /rack/ocupar
-                    savedReservation, // Enviamos la ReservationEntity completa
+                    rackServiceUrl + "/ocupar",
+                    savedReservation,
                     String.class
             );
 
             if (rackResponse.getStatusCode() == HttpStatus.OK) {
-                System.out.println("Espacio en rack marcado exitosamente por m6-rack-service.");
+                System.out.println("Espacio en rack marcado exitosamente.");
             } else {
-                System.err.println("Error al marcar espacio en rack por m6-rack-service. Status: " + rackResponse.getStatusCode());
+                System.err.println("Error al marcar espacio en rack. Status: " + rackResponse.getStatusCode());
             }
         } catch (Exception e) {
-            System.err.println("Error al comunicarse con m6-rack-service para marcar el rack: " + e.getMessage());
-            e.printStackTrace(); // Para depuración
+            System.err.println("Error al comunicarse para marcar el rack: " + e.getMessage());
+            e.printStackTrace();
         }
-        // --- FIN: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE ---
 
-
-        //guardar la reserva con el precio total (y las asignaciones si no se hizo en la primera salvada)
+        //guardar la reserva con el precio total
         return reservationRepository.save(savedReservation);
     }
 
@@ -149,7 +143,7 @@ public class ReservationService {
         Optional<ReservationEntity> reservationOptional = reservationRepository.findById(id);
         if (reservationOptional.isPresent()) {
             ReservationEntity reservation = reservationOptional.get();
-            // Liberar los karts asociados
+            //liberar los karts asociados
             List<UserKartAssignmentEntity> assignments = userKartAssignmentRepository.findByReservationId(id);
             for (UserKartAssignmentEntity assignment : assignments) {
                 KartEntity kart = assignment.getKart();
@@ -157,16 +151,13 @@ public class ReservationService {
                 kartRepository.save(kart);
                 userKartAssignmentRepository.delete(assignment);
             }
-            // --- INICIO: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE PARA LIBERAR ---
             try {
-                // Realizar la llamada DELETE al m6-rack-service para liberar el rack
                 restTemplate.delete(rackServiceUrl + "/liberar/{reservationId}", id);
-                System.out.println("Espacio en rack liberado exitosamente por m6-rack-service.");
+                System.out.println("Espacio en rack liberado exitosamente.");
             } catch (Exception e) {
-                System.err.println("Error al comunicarse con m6-rack-service para liberar el rack: " + e.getMessage());
-                e.printStackTrace(); // Para depuración
+                System.err.println("Error al comunicarsepara liberar el rack: " + e.getMessage());
+                e.printStackTrace();
             }
-            // --- FIN: NUEVA LÓGICA PARA LLAMAR A M6-RACK-SERVICE PARA LIBERAR ---
 
             reservationRepository.deleteById(id);
             return true;

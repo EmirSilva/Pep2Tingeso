@@ -1,12 +1,12 @@
 server:
-  port: 8761
+  port: 8761        #puerto del Eureka Server
 
 eureka:
   instance:
-    hostname: eureka-server-service
-    prefer-ip-address: false
+    hostname: eureka-server-service     #nombre del servicio
+    prefer-ip-address: false            #prioriza usar el nombre del servicio en lugar de la IP del contenedor
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    fetch-registry: false               #no obtiene ni mantiene una copia local de Eureka
+    register-with-eureka: false         #no se registra a si mismo en Eureka
     service-url:
-      default-zone: http://eureka-server-service:8761/eureka/
+      default-zone: http://eureka-server-service:8761/eureka/   #url del Eureka Server

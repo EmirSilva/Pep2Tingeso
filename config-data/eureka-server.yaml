@@ -1,8 +1,8 @@
 server:
-  port: 8761
+  port: 8761      #puerto en el que escucha Eureka
 eureka:
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    fetch-registry: false           #no debe obtener y mantener una copia local de Eureka
+    register-with-eureka: false     #para que no se registre a si mismo
     service-url:
-      default-zone: http://eureka-server-service:8761/eureka/
+      default-zone: http://eureka-server-service:8761/eureka/   #url del Eureka Server

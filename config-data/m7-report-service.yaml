@@ -1,10 +1,8 @@
 server:
-  port: ${PORT:${SERVER_PORT:0}}
+  port: ${PORT:${SERVER_PORT:0}}      #usa una variable de entorno cuyo valor es dinamico (aleatorio)
 eureka:
   instance:
-    preferIpAddress: true
+    preferIpAddress: true         #prioriza usar la IP del contenedor
   client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      default-zone: http://eureka-server-service:8761/eureka/
+    fetch-registry: true          #le indica al ms que debe obtener y mantener una copia local de Eureka
+    register-with-eureka: true    #le indica a este microservicio que debe registrarse con el Eureka Server

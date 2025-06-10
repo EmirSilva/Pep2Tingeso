@@ -1,36 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: m7-report-service-deployment
+  name: m7-report-service-deployment        #nombre para deployment dentro del cluster
   labels:
-    app: m7-report-service
+    app: m7-report-service                  #etiquetas que identifican el deployment
 spec:
-  replicas: 1
+  replicas: 1                               #numero de replicas del pod que se desea mantener en ejecucion (pod)
   selector:
     matchLabels:
-      app: m7-report-service
+      app: m7-report-service                #solo gestionara pods que tengan la etiqueta 'app: m7-report-service'
   template:
     metadata:
       labels:
-        app: m7-report-service
+        app: m7-report-service              #etiquetas que se asignaran a los pods creados por este deployment
     spec:
       containers:
-        - name: m7-report
-          image: emirjr/m7-imagen:v14 # Asegúrate de que esta imagen esté disponible en tu registro
+        - name: m7-report                   #nombre del contenedor dentro del pod
+          image: emirjr/m7-imagen:v14       #imagen
           ports:
-            - containerPort: 8090 # El puerto en el que escucha tu aplicación Spring Boot
+            - containerPort: 8090           #puerto en el que el contenedor escucha dentro del pod
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: m7-report-service # Nombre del servicio para que otros microservicios lo encuentren
+  name: m7-report-service                   #nombre del servicio que permite acceder al deployment
   labels:
-    app: m7-report-service
+    app: m7-report-service                  #etiquetas que identifican el servicio
 spec:
   ports:
-    - port: 8090       # Puerto en el que el servicio escuchará
-      targetPort: 8090 # Puerto del contenedor al que se redirigirá el tráfico
+    - port: 8090                            #puerto en el que el servicio escuchara dentro del cluster
+      targetPort: 8090                      #puerto del contenedor al que se redirigira el trafico
       protocol: TCP
   selector:
-    app: m7-report-service # Selecciona los pods con esta etiqueta
-  type: ClusterIP # Puedes cambiar a ClusterIP si solo necesitas acceso interno dentro del cluster
+    app: m7-report-service                  #selecciona los pods que tienen la etiqueta 'app: m7-report-service'
+  type: ClusterIP                           #comunicacion interna (no expone afuera del cluster)
